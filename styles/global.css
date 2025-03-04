@@ -1,0 +1,27 @@
+.dashboard-container {
+  @apply min-h-screen bg-gray-50;
+}
+
+.metric-card {
+  @apply transition-all duration-300 hover:shadow-md;
+}
+
+.alert-item {
+  @apply transition-all duration-200 hover:transform hover:scale-[1.01];
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap');
+
+.brand-container {
+  font-family: 'Poppins', sans-serif;
+}
+
+.career-seed-title {
+  @apply text-4xl font-extrabold bg-gradient-to-r from-emerald-600 to-blue-500 bg-clip-text text-transparent;
+  letter-spacing: -0.5px;
+}
+
+.career-seed-subtitle {
+  @apply text-gray-600 font-light;
+  letter-spacing: 0.5px;
+}

@@ -1,0 +1,11 @@
+[build]
+  command = "npm run build"
+  publish = "build"
+  node_version = "16"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+C:\Users\YourUsername\Documents\GitHub\monitoring-dashboard
