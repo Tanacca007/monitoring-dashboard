@@ -1,13 +1,11 @@
 const AlertHandler = {
-  handleAlertAction(alertId: string, action: string = 'acknowledge'): void {
-    const actions = {
-      acknowledge: this.acknowledgeAlert,
-      dismiss: this.dismissAlert,
-    };
-
-    return actions[action]();
-  }
-  // ... other methods
+  handleAlertAction(alertId: string, action = 'acknowledge'): void {
+  const actions: Record<string, (id: string) => void> = {
+    acknowledge: this.acknowledgeAlert,
+    dismiss: this.dismissAlert,
+  };
+  actions[action]?.(alertId);
+}
 };
     const selectedAction = actions[action];
     if (selectedAction) {
