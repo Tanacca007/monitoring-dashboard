@@ -10,10 +10,12 @@
     "eject": "react-scripts eject"
   },
   "dependencies": {
+    "@types/axios": "^0.9.36",
     "@types/chart.js": "^2.9.41",
     "@types/node": "^16.18.80",
     "@types/react": "^18.2.57",
     "@types/react-dom": "^18.2.19",
+    "axios": "^1.8.1",
     "chart.js": "^4.4.8",
     "dotenv": "^16.4.7",
     "react": "^18.2.0",
