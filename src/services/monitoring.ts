@@ -19,10 +19,10 @@ export interface Alert {
 }
 
 export const monitoringService = {
-  // Fetch system metrics
+  // Fetch all metrics
   getMetrics: async (): Promise<Metric[]> => {
     const response = await api.get('/metrics');
-    return response.data;
+    return response.data as Metric[];
   },
 
   // Fetch specific metric history
@@ -30,7 +30,7 @@ export const monitoringService = {
     const response = await api.get(`/metrics/${metricId}/history`, {
       params: { timeRange }
     });
-    return response.data;
+    return response.data as Metric[];
   },
 
   // Fetch alerts
@@ -38,7 +38,7 @@ export const monitoringService = {
     const response = await api.get('/alerts', {
       params: { status }
     });
-    return response.data;
+    return response.data as Alert[];
   },
 
   // Acknowledge an alert
@@ -50,4 +50,6 @@ export const monitoringService = {
   updateAlertSettings: async (settings: any): Promise<void> => {
     await api.put('/alerts/settings', settings);
   }
-}; 
+};
+
+export default monitoringService; 

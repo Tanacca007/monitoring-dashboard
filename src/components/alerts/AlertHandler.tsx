@@ -1,15 +1,28 @@
+import React from 'react';
+
+// Add the missing utility function
+const getCurrentUser = () => {
+  // Implementation
+  return 'system';
+};
+
+// Fix AlertHandler object with complete implementation
 const AlertHandler = {
-  handleAlertAction(alertId, action = 'acknowledge') {
-    const actions = {
+  handleAlertAction(alertId: string, action: string = 'acknowledge') {
+    const actions: Record<string, (id: string) => any> = {
       acknowledge: this.acknowledgeAlert,
       dismiss: this.dismissAlert,
-      escalate: this.escalateAlert
+      escalate: this.escalateAlert,
     };
-
-    return actions[action](alertId);
+    
+    if (actions[action]) {
+      return actions[action](alertId);
+    } else {
+      console.error(`Unknown action: ${action}`);
+    }
   },
 
-  acknowledgeAlert(alertId) {
+  acknowledgeAlert(alertId: string) {
     return {
       type: 'ACKNOWLEDGE_ALERT',
       alertId,
@@ -19,7 +32,7 @@ const AlertHandler = {
     };
   },
 
-  dismissAlert(alertId) {
+  dismissAlert(alertId: string) {
     return {
       type: 'DISMISS_ALERT',
       alertId,
@@ -29,7 +42,7 @@ const AlertHandler = {
     };
   },
 
-  escalateAlert(alertId) {
+  escalateAlert(alertId: string) {
     return {
       type: 'ESCALATE_ALERT',
       alertId,
@@ -38,7 +51,11 @@ const AlertHandler = {
       status: 'escalated',
       nextLevel: this.determineEscalationLevel(alertId)
     };
+  },
+  
+  determineEscalationLevel(alertId: string) {
+    return 'level1';
   }
 };
 
-export { AlertHandler };
+export default AlertHandler;

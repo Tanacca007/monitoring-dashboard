@@ -1,31 +1,31 @@
-const AlertHandler = {
-  handleAlertAction(alertId: string, action: string = 'acknowledge'): void {
-    const actions = {
-      acknowledge: this.acknowledgeAlert,
-      dismiss: this.dismissAlert,
-    };
+import React from 'react';
 
-    return actions[action]();
-  }
-  // ... other methods
+type AlertActionKeys = 'acknowledge' | 'dismiss';
+
+type AlertActions = {
+  acknowledge: (alertId: string) => void;
+  dismiss: (alertId: string) => void;
+  [key: string]: (alertId: string) => void; // Index signature to allow any string key
 };
 
-    const selectedAction = actions[action];
-    if (selectedAction) {
-      selectedAction(alertId);
+const alertActions: AlertActions = {
+  acknowledge: (alertId: string) => {
+    // Logic to acknowledge alert
+    console.log(`Alert ${alertId} acknowledged.`);
+  },
+  dismiss: (alertId: string) => {
+    // Logic to dismiss alert
+    console.log(`Alert ${alertId} dismissed.`);
+  }
+};
+
+const AlertHandler = {
+  handleAlertAction(alertId: string, action: AlertActionKeys): void {
+    if (alertActions[action]) {
+      alertActions[action](alertId);
     } else {
       console.error(`Unknown action: ${action}`);
     }
-  },
-
-  acknowledgeAlert(alertId: string): void {
-    // Logic to acknowledge the alert
-    console.log(`Alert ${alertId} acknowledged`);
-  },
-
-  dismissAlert(alertId: string): void {
-    // Logic to dismiss the alert
-    console.log(`Alert ${alertId} dismissed`);
   },
 };
 

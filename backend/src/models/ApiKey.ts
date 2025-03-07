@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 
 export interface IApiKey {
+  save(): unknown;
   key: string;
   name: string;
   createdAt: Date;

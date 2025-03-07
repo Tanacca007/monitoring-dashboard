@@ -1,7 +1,7 @@
-import express from 'express';
+import express, { Router, Request, Response, NextFunction } from 'express';
 import Alert, { IAlert } from '../models/Alert';
 
-const router = express.Router();
+const router = Router();
 
 // Create new alert
 router.post('/', async (req: express.Request, res: express.Response) => {
@@ -53,14 +53,15 @@ router.get('/', async (req: express.Request, res: express.Response) => {
 });
 
 // Acknowledge an alert
-router.post('/:id/acknowledge', async (req: express.Request, res: express.Response) => {
+router.post('/:id/acknowledge', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const { id } = req.params;
     const { acknowledgedBy } = req.body;
 
     const alert = await Alert.findById(id);
     if (!alert) {
-      return res.status(404).json({ error: 'Alert not found' });
+      res.status(404).json({ error: 'Alert not found' });
+      return;
     }
 
     alert.acknowledged = true;
@@ -68,10 +69,9 @@ router.post('/:id/acknowledge', async (req: express.Request, res: express.Respon
     alert.acknowledgedBy = acknowledgedBy;
     await alert.save();
 
-    res.json(alert);
+    res.status(200).send('Alert acknowledged');
   } catch (error) {
-    console.error('Error acknowledging alert:', error);
-    res.status(500).json({ error: 'Failed to acknowledge alert' });
+    next(error);
   }
 });
 

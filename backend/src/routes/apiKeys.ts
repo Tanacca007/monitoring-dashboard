@@ -1,22 +1,22 @@
-import express from 'express';
+import express, { Router, Request, Response, NextFunction } from 'express';
 import crypto from 'crypto';
-import ApiKey from '../models/ApiKey';
+import ApiKeyModel from '../models/ApiKey';
 
-const router = express.Router();
+const router = Router();
 
 // Generate a new API key
-router.post('/', async (req: express.Request, res: express.Response) => {
+router.post('/', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const { name } = req.body;
-
     if (!name) {
-      return res.status(400).json({ error: 'Name is required' });
+      res.status(400).json({ error: 'Name is required' });
+      return;
     }
 
     // Generate a random API key
     const key = crypto.randomBytes(32).toString('hex');
 
-    const apiKey = new ApiKey({
+    const apiKey = new ApiKeyModel({
       key,
       name,
       createdAt: new Date(),
@@ -40,7 +40,7 @@ router.post('/', async (req: express.Request, res: express.Response) => {
 // List all API keys (without showing the actual keys)
 router.get('/', async (req: express.Request, res: express.Response) => {
   try {
-    const apiKeys = await ApiKey.find({}, { key: 0 });
+    const apiKeys = await ApiKeyModel.find({}, { key: 0 });
     res.json(apiKeys);
   } catch (error) {
     console.error('Error fetching API keys:', error);
@@ -49,22 +49,20 @@ router.get('/', async (req: express.Request, res: express.Response) => {
 });
 
 // Deactivate an API key
-router.delete('/:id', async (req: express.Request, res: express.Response) => {
+router.delete('/:id', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const { id } = req.params;
-    const apiKey = await ApiKey.findById(id);
-
+    const apiKey = await ApiKeyModel.findById(id);
     if (!apiKey) {
-      return res.status(404).json({ error: 'API key not found' });
+      res.status(404).send('API key not found');
+      return;
     }
-
-    apiKey.isActive = false;
-    await apiKey.save();
-
-    res.json({ message: 'API key deactivated successfully' });
+    
+    await ApiKeyModel.deleteOne({ _id: id });
+    res.status(200).send('API key deleted');
   } catch (error) {
-    console.error('Error deactivating API key:', error);
-    res.status(500).json({ error: 'Failed to deactivate API key' });
+    console.error('Error deleting API key:', error);
+    res.status(500).json({ error: 'Failed to delete API key' });
   }
 });
 

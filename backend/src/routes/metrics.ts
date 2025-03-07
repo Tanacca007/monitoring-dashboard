@@ -1,7 +1,7 @@
-import express from 'express';
+import express, { Router, Request, Response, NextFunction } from 'express';
 import Metric, { IMetric } from '../models/Metric';
 
-const router = express.Router();
+const router = Router();
 
 // Submit new metrics
 router.post('/', async (req: express.Request, res: express.Response) => {
@@ -21,7 +21,7 @@ router.post('/', async (req: express.Request, res: express.Response) => {
 });
 
 // Get metrics with filtering and aggregation
-router.get('/', async (req: express.Request, res: express.Response) => {
+router.get('/', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const { 
       name, 
@@ -53,7 +53,8 @@ router.get('/', async (req: express.Request, res: express.Response) => {
           }
         }
       ]);
-      return res.json(aggregation);
+      res.json(aggregation);
+      return;
     }
 
     const metrics = await Metric.find(query)
@@ -68,11 +69,12 @@ router.get('/', async (req: express.Request, res: express.Response) => {
 });
 
 // Get metric by ID
-router.get('/:id', async (req: express.Request, res: express.Response) => {
+router.get('/:id', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const metric = await Metric.findById(req.params.id);
     if (!metric) {
-      return res.status(404).json({ error: 'Metric not found' });
+      res.status(404).json({ error: 'Metric not found' });
+      return;
     }
     res.json(metric);
   } catch (error) {
