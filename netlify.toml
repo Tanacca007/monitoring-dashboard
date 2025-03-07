@@ -3,7 +3,7 @@
   publish = "build"
 
 # Set Node.js version
-[build.environment]
+[context.production.environment]
   NODE_VERSION = "16"
 
 # Configure redirects for SPA
