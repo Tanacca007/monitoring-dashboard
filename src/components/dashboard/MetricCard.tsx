@@ -1,4 +1,12 @@
-const MetricCard = ({ title, value, trend }) => {
+import React from 'react';
+
+interface MetricCardProps {
+  title: string;
+  value: string | number;
+  trend?: 'up' | 'down' | 'stable';
+}
+
+const MetricCard: React.FC<MetricCardProps> = ({ title, value, trend }) => {
   const trendColors = {
     up: 'text-green-500',
     down: 'text-red-500',
@@ -10,12 +18,16 @@ const MetricCard = ({ title, value, trend }) => {
       <h3 className="text-sm text-gray-600">{title}</h3>
       <div className="flex items-center justify-between mt-2">
         <span className="text-xl font-bold">{value}</span>
-        <span className={`${trendColors[trend]} flex items-center`}>
-          {trend === 'up' && '↑'}
-          {trend === 'down' && '↓'}
-          {trend === 'stable' && '→'}
-        </span>
+        {trend && (
+          <span className={`${trendColors[trend]} flex items-center`}>
+            {trend === 'up' && '↑'}
+            {trend === 'down' && '↓'}
+            {trend === 'stable' && '→'}
+          </span>
+        )}
       </div>
     </div>
   );
 };
+
+export default MetricCard;

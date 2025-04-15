@@ -1,4 +1,7 @@
-const MetricDisplay = () => {
+import React from 'react';
+import MetricCard from './MetricCard';
+
+const MetricDisplay: React.FC = () => {
   return (
     <div className="col-span-4 bg-white rounded-lg shadow p-4">
       <h2 className="text-lg font-semibold mb-4">Key Metrics</h2>
@@ -11,3 +14,5 @@ const MetricDisplay = () => {
     </div>
   );
 };
+
+export default MetricDisplay;

@@ -26,10 +26,13 @@ jobs:
 
       - name: Deploy to Netlify
         env:
-          NETLIFY_AUTH_TOKEN: $ {{ secrets.NETLIFY_AUTH_TOKEN }} # Correctly access the secret
-          NETLIFY_SITE_ID: $ {{ secrets.NETLIFY_SITE_ID }} # Optional: If you have a site ID
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }} # Correctly access the secret
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }} # Optional: If you have a site ID
         run: |
           npx netlify-cli deploy --prod --auth=$NETLIFY_AUTH_TOKEN --site=$NETLIFY_SITE_ID
 
       - name: Push changes to GitHub
-        run: git push
+        run: |
+          git config --global user.ftmatanga@gmail.com
+          git config --global user.Tanacca007
+          git push
