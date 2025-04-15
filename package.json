@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "set NODE_OPTIONS=--openssl-legacy-provider&&react-scripts start",
-    "build": "set NODE_OPTIONS=--openssl-legacy-provider&&set SKIP_PREFLIGHT_CHECK=true&&react-scripts build",
+    "build": "SKIP_PREFLIGHT_CHECK=true NODE_OPTIONS=--openssl-legacy-provider react-scripts build",
     "build:windows": "set NODE_OPTIONS=--openssl-legacy-provider&&set SKIP_PREFLIGHT_CHECK=true&&react-scripts build",
     "build:netlify": "SKIP_PREFLIGHT_CHECK=true NODE_OPTIONS=--openssl-legacy-provider react-scripts build",
     "test": "set NODE_OPTIONS=--openssl-legacy-provider&&react-scripts test",
