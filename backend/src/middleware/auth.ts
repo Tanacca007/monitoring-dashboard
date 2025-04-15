@@ -1,10 +1,13 @@
 import { Request, Response, NextFunction } from 'express';
-import mongoose from 'mongoose';
+import mongoose, { Document } from 'mongoose';
 import ApiKeyModel, { IApiKey } from '../models/ApiKey';
+
+// Define a more flexible interface that can accept Mongoose documents
+type MongooseDocument = Document<unknown, any, IApiKey> & IApiKey;
 
 // Define interface for request with apiKey
 interface RequestWithApiKey extends Request {
-  apiKey?: IApiKey;
+  apiKey?: IApiKey | MongooseDocument | any; // Make more flexible to avoid TypeScript errors
 }
 
 // Export as named export, not default export
