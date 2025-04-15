@@ -2,16 +2,11 @@ import { Request, Response, NextFunction } from 'express';
 import mongoose, { Document } from 'mongoose';
 import ApiKeyModel, { IApiKey } from '../models/ApiKey';
 
-// Define a more flexible interface that can accept Mongoose documents
-type MongooseDocument = Document<unknown, any, IApiKey> & IApiKey;
-
-// Define interface for request with apiKey
-interface RequestWithApiKey extends Request {
-  apiKey?: IApiKey | MongooseDocument | any; // Make more flexible to avoid TypeScript errors
-}
+// (Removed custom RequestWithApiKey interface and MongooseDocument type)
+// Use global Express.Request augmentation from types.d.ts instead.
 
 // Export as named export, not default export
-export const apiKeyAuthMiddleware = async (req: RequestWithApiKey, res: Response, next: NextFunction): Promise<void> => {
+export const apiKeyAuthMiddleware = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const apiKeyHeader = req.header('X-API-Key');
     if (!apiKeyHeader) {
