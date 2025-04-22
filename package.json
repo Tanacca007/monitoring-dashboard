@@ -6,7 +6,7 @@
     "start": "set NODE_OPTIONS=--openssl-legacy-provider&&react-scripts start",
     "build": "react-scripts build",
     "build:windows": "set NODE_OPTIONS=--openssl-legacy-provider&&set SKIP_PREFLIGHT_CHECK=true&&react-scripts build",
-    "build:netlify": "SKIP_PREFLIGHT_CHECK=true NODE_OPTIONS=--openssl-legacy-provider react-scripts build",
+    "build:netlify": "CI=false SKIP_PREFLIGHT_CHECK=true react-scripts build --openssl-legacy-provider",
     "test": "set NODE_OPTIONS=--openssl-legacy-provider&&react-scripts test",
     "test:coverage": "set NODE_OPTIONS=--openssl-legacy-provider&&react-scripts test --coverage --watchAll=false",
     "eject": "react-scripts eject"
