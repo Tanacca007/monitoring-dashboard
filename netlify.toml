@@ -1,8 +1,12 @@
 [build]
-  command = "npm run build"
+  command = "npm run build:netlify"
   publish = "build"
 
-# Set Node.js version
+# Set Node.js version for all environments
+[build.environment]
+  NODE_VERSION = "18"
+  NPM_VERSION = "9"
+
 [context.production.environment]
   NODE_VERSION = "18"
 
