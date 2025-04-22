@@ -21,7 +21,10 @@ export const apiKeyAuthMiddleware = async (req: Request, res: Response, next: Ne
     }
     
     // Convert Mongoose document to plain object and assign it to req.apiKey
-    req.apiKey = keyDoc.toObject() as IApiKey;
+    // Using toObject() ensures we have a plain JavaScript object, not a Mongoose document
+    if (keyDoc) {
+      req.apiKey = keyDoc.toObject ? keyDoc.toObject() as IApiKey : keyDoc as unknown as IApiKey;
+    }
     
     // Update lastUsed field
     await ApiKeyModel.updateOne(
