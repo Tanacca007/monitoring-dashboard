@@ -2,10 +2,13 @@
   command = "npm run build:netlify"
   publish = "build"
 
-# Set Node.js version for all environments
+# Set Node.js version and environment variables for all environments
 [build.environment]
   NODE_VERSION = "18"
   NPM_VERSION = "9"
+  NODE_OPTIONS = "--openssl-legacy-provider"
+  SKIP_PREFLIGHT_CHECK = "true"
+  CI = "false"
 
 [context.production.environment]
   NODE_VERSION = "18"
