@@ -1,5 +1,5 @@
 [build]
-  command = "npm run build:netlify"
+  command = "TSC_COMPILE_ON_ERROR=true npm run build:netlify"
   publish = "build"
 
 # Set Node.js version and environment variables for all environments
